@@ -1,0 +1,11 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+
+html{
+    /* background-color:rgb(46 50 51); */
+    background-color:rgb(196, 196, 196);
+}
