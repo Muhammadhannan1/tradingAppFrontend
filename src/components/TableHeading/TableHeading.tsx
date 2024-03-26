@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 
 interface props{
     type: string,
-    time :string
+    time :any
 }
 
 const capitalize = (word:string) :string =>{
@@ -12,14 +12,17 @@ const capitalize = (word:string) :string =>{
   return capitalizeWord
 } 
 
+
+
 const TableHeading = ({type , time}:props) => {
+
   return (
     <div className="flex gap-x-8 justify-between p-4 bg-white"> 
     <Box>
         <Typography sx={{fontFamily:'revert-layer',color:'rgb(1, 188, 141)',fontWeight:'bold' }}>Top {capitalize(type)}</Typography>
     </Box>
     <Box>
-      <Typography sx={{fontFamily:'revert-layer', color:'rgb(1, 188, 141)', fontWeight:'bold'}}>New data at {time}</Typography>
+      <Typography sx={{fontFamily:'revert-layer', color:'rgb(1, 188, 141)', fontWeight:'bold'}}>Data at {time}</Typography>
         </Box>
     </div>
   )

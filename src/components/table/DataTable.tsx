@@ -6,25 +6,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
+interface props{
+ data:any
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
-export default function DataTable() {
+export default function DataTable({data}:props) {
   return (
     <TableContainer component={Paper}>
       <Table size='small'sx={{ minWidth: 650 }} aria-label="simple table">
@@ -36,24 +23,28 @@ export default function DataTable() {
             <TableCell align="right">24h Change</TableCell>
             <TableCell align="right">4h Change</TableCell>
             <TableCell align="right">1h Change</TableCell>
-            <TableCell align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TableCell>
+            <TableCell align="right">position</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row,index) => (
+          {data.map((data:any,index:number) => (
             <TableRow
-            key={row.name}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            key={data.symbolName}
+            sx={{
+              // '&:last-child td, &:last-child th': { border: 0 },
+              ...(data.newEntry ===true  && { backgroundColor: 'rgb(1, 188, 141,0.3)',})
+            }}            >
             <TableCell align="left" >{index + 1}</TableCell>
             <TableCell component="th" scope="row" >
-                {row.name}
+                {data.symbolName}
               </TableCell>
-              <TableCell align="right" >{row.calories}</TableCell>
-              <TableCell align="right" >{row.fat}</TableCell>
-              <TableCell align="right" >{row.carbs}</TableCell>
-              <TableCell align="right" >{row.protein}</TableCell>
-              <TableCell align="right" ></TableCell>
+              <TableCell align="right" >{data.price}</TableCell>
+              <TableCell align="right" >{data.twentyHourHourChange.toFixed(5)}</TableCell>
+              <TableCell align="right" >{data.FourHourChange.toFixed(5)}</TableCell>
+              <TableCell align="right" >{data.oneHourChange.toFixed(5)}</TableCell>
+              <TableCell align="right" sx={{ ...(data.newEntry ===true  && { color: 'rgb(1, 188, 141)',})}}>{
+              data.newEntry === true ? 'new Entry':'--'
+              }</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -4,9 +4,10 @@ import { Box } from "@mui/material"
 import DataTable from "../../components/table/DataTable"
 import TableHeading from "../../components/TableHeading/TableHeading"
 import DropDown from "../../components/DropDown/DropDown"
-import  {useContext} from 'react'
+import  {useContext, useEffect} from 'react'
 import { stateContext } from '../../context/States';
 import  { SelectChangeEvent } from '@mui/material/Select';
+import axios from "axios"
 
 const categoryList = [
   {value:'gainers',type:'Gainers'},
@@ -29,9 +30,24 @@ const Home = () => {
     setCategotyType: (value: string) => void;
     timeFrame: string;
     setTimeFrame: (value: string) => void;
+    previousData : []
+    setPreviousData:(value: string) => void;
+    newData: []
+    setNewData:(value: string) => void;
+    previousDataTime:string
+    setPreviousDataTime:(value: string) => void;
+    newDataTime:string
+    setNewDataTime:(value: string) => void;
 };
   
-  const { categotyType, setCategotyType ,timeFrame,setTimeFrame} = context as ContextType;
+  const { 
+    categotyType, setCategotyType ,
+    timeFrame,setTimeFrame,
+    previousData,setPreviousData,
+    newData,setNewData,
+    previousDataTime, setPreviousDataTime,
+    newDataTime, setNewDataTime
+  } = context as ContextType;
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
     setCategotyType(event.target.value as string);
@@ -40,6 +56,28 @@ const Home = () => {
   const handleTimeChange = (event: SelectChangeEvent) => {
     setTimeFrame(event.target.value as string);
   };
+
+  const fetchDataAndUpdateState = async () => {
+    try {
+      const apiData = await fetchData(`http://localhost:3300/api/v1/coinData/getData?categoryType=${categotyType.toLowerCase()}&timeFrame=${timeFrame}`);
+      console.log(apiData);
+      setPreviousData(apiData.oldData)
+      setNewData(apiData.newData)
+      setPreviousDataTime(apiData.oldDataTime)
+      setNewDataTime(apiData.newDataTime)
+
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  
+useEffect(() => {
+  fetchDataAndUpdateState();
+
+ 
+}, [categotyType,timeFrame])
+
 
   return (
     <>
@@ -50,13 +88,13 @@ const Home = () => {
 
     <Box className="p-4 flex flex-col xl:flex-row  gap-y-7 xl:gap-x-7" >
     <div className="shadow-2xl w-full xl:w-1/2 " > 
-    <TableHeading  type= {categotyType} time = {'Sat Mar 23 2024 01:00:26 GMT+0500 (PST)'}/>
-    <DataTable/>
+    <TableHeading  type= {categotyType} time = {newDataTime}/>
+    <DataTable data={newData}/>
     </div>
 
     <div className="shadow-2xl w-full xl:w-1/2 "> 
-    <TableHeading type= {categotyType} time = {'Sat Mar 23 2024 11:00:26 GMT+0500 (PST)'}/>
-    <DataTable/>
+    <TableHeading type= {categotyType} time = {previousDataTime}/>
+    <DataTable data={previousData}/>
     </div>
 
     </Box>
@@ -67,4 +105,9 @@ const Home = () => {
 export default Home
 
 
-
+const fetchData = async (url :string) =>{
+  console.log(url)
+  const response = await axios.get(url);
+  const responseData = response.data.data;
+   return responseData
+}
