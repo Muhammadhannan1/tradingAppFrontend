@@ -21,25 +21,24 @@ const TimeFrameList = [
   {value:'12h',type:'12h'},
   {value:'24h',type:'24h'}
 ]
-
+type ContextType = {
+  categotyType: string; 
+  setCategotyType: (value: string) => void;
+  timeFrame: string;
+  setTimeFrame: (value: string) => void;
+  previousData : []
+  setPreviousData:(value: string) => void;
+  newData: []
+  setNewData:(value: string) => void;
+  previousDataTime:string
+  setPreviousDataTime:(value: string) => void;
+  newDataTime:string
+  setNewDataTime:(value: string) => void;
+};
 const Home = () => {
 
   const context = useContext(stateContext);
-  type ContextType = {
-    categotyType: string; 
-    setCategotyType: (value: string) => void;
-    timeFrame: string;
-    setTimeFrame: (value: string) => void;
-    previousData : []
-    setPreviousData:(value: string) => void;
-    newData: []
-    setNewData:(value: string) => void;
-    previousDataTime:string
-    setPreviousDataTime:(value: string) => void;
-    newDataTime:string
-    setNewDataTime:(value: string) => void;
-};
-  
+
   const { 
     categotyType, setCategotyType ,
     timeFrame,setTimeFrame,
@@ -59,7 +58,7 @@ const Home = () => {
 
   const fetchDataAndUpdateState = async () => {
     try {
-      const apiData = await fetchData(`http://localhost:3300/api/v1/coinData/getData?categoryType=${categotyType.toLowerCase()}&timeFrame=${timeFrame}`);
+      const apiData = await fetchData(`http://localhost:6100/api/v1/coinData/getData?categoryType=${categotyType.toLowerCase()}&timeFrame=${timeFrame}`);
       console.log(apiData);
       setPreviousData(apiData.oldData)
       setNewData(apiData.newData)

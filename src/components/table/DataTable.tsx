@@ -42,8 +42,12 @@ export default function DataTable({data}:props) {
               <TableCell align="right" >{data.twentyHourHourChange.toFixed(5)}</TableCell>
               <TableCell align="right" >{data.FourHourChange.toFixed(5)}</TableCell>
               <TableCell align="right" >{data.oneHourChange.toFixed(5)}</TableCell>
-              <TableCell align="right" sx={{ ...(data.newEntry ===true  && { color: 'rgb(1, 188, 141)',})}}>{
+              {/* <TableCell align="right" sx={{ ...(data.newEntry ===true  && { color: 'rgb(1, 188, 141)',})}}>{
               data.newEntry === true ? 'new Entry':'--'
+              }</TableCell> */}
+              <TableCell align="right" sx={{ ...(data.position === 'New Entry'  && { color: 'rgb(1, 188, 141)',}), paddingLeft:'0'}}>{
+              // data.newEntry === true ? 'new Entry':'--'
+              data.position
               }</TableCell>
             </TableRow>
           ))}
