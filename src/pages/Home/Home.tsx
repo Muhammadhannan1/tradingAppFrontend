@@ -58,7 +58,7 @@ const Home = () => {
 
   const fetchDataAndUpdateState = async () => {
     try {
-      const apiData = await fetchData(`http://localhost:6100/api/v1/coinData/getData?categoryType=${categotyType.toLowerCase()}&timeFrame=${timeFrame}`);
+      const apiData = await fetchData(`http://kucoinapi.cyberguards.info/api/v1/coinData/getData?categoryType=${categotyType.toLowerCase()}&timeFrame=${timeFrame}`);
       console.log(apiData);
       setPreviousData(apiData.oldData)
       setNewData(apiData.newData)
