@@ -9,17 +9,30 @@
 //   },
 // };
 
+// module.exports = {
+//     apps: [
+//       {
+//         name: 'KuCoin trading analytics',
+//         script: './server.js',
+//       },
+//     ],
+//     resolve: {
+//       fallback: {
+//         path: require.resolve('path-browserify'),
+//       },
+//     },
+//   };
+  
+
 module.exports = {
-    apps: [
-      {
-        name: 'KuCoin trading analytics',
-        script: './server.js',
-      },
-    ],
-    resolve: {
-      fallback: {
-        path: require.resolve('path-browserify'),
+  apps: [
+    {
+      name: 'KuCoin trading analytics',
+      script: 'npm',
+      args: 'run serve',
+      env: {
+        NODE_ENV: 'production',
       },
     },
-  };
-  
+  ],
+};
