@@ -23,16 +23,27 @@
 //     },
 //   };
   
-
 module.exports = {
   apps: [
     {
-      name: 'KuCoin trading analytics',
-      script: 'npm',
-      args: 'run serve',
-      env: {
-        NODE_ENV: 'production',
-      },
-    },
-  ],
-};
+      name: "KuCoin trading analytics",
+      script: "npm",
+      args: "run prod",
+      instances: "1",
+      exec_mode: "fork",  // if there is only one instance, use cluster otherwise
+    }
+  ]
+}
+
+// module.exports = {
+//   apps: [
+//     {
+//       name: 'KuCoin trading analytics',
+//       script: 'npm',
+//       args: 'run serve',
+//       env: {
+//         NODE_ENV: 'production',
+//       },
+//     },
+//   ],
+// };
