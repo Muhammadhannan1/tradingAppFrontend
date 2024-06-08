@@ -62,8 +62,8 @@ const Home = () => {
       console.log(apiData);
       setPreviousData(apiData.oldData)
       setNewData(apiData.newData)
-      setPreviousDataTime(apiData.oldDataTime)
-      setNewDataTime(apiData.newDataTime)
+      setPreviousDataTime(new Date(apiData.oldDataTime).toLocaleString())
+      setNewDataTime(new Date(apiData.newDataTime).toLocaleString())
 
 
     } catch (error) {
